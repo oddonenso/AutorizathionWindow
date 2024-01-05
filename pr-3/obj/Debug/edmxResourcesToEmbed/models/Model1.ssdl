@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище PhotoStudioModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="clients">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="30" />
+    <Property Name="surname" Type="nvarchar" MaxLength="30" />
+    <Property Name="otchestvo" Type="nvarchar" MaxLength="30" />
+    <Property Name="phone" Type="nvarchar" MaxLength="50" />
+    <Property Name="RoleId" Type="int" />
+    <Property Name="login" Type="nvarchar" MaxLength="50" />
+    <Property Name="password" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="contract">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name_contract" Type="nvarchar" MaxLength="300" />
+    <Property Name="id_product" Type="int" Nullable="false" />
+    <Property Name="contract_description" Type="nvarchar" MaxLength="500" />
+    <Property Name="data_product" Type="date" />
+  </EntityType>
+  <EntityType Name="employee">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="30" />
+    <Property Name="surname" Type="nvarchar" MaxLength="30" />
+    <Property Name="otchestvo" Type="nvarchar" MaxLength="30" />
+    <Property Name="age" Type="int" />
+    <Property Name="phone_number" Type="nvarchar" MaxLength="22" />
+    <Property Name="email" Type="nvarchar" MaxLength="250" />
+    <Property Name="job_title" Type="int" Nullable="false" />
+    <Property Name="salary" Type="money" />
+    <Property Name="work experience" Type="nvarchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="job_doljnost">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="title" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="oborudivanie">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name_products" Type="nvarchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="orders">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_clients" Type="int" Nullable="false" />
+    <Property Name="id_employee" Type="int" Nullable="false" />
+    <Property Name="id_product" Type="int" Nullable="false" />
+    <Property Name="id_contract" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="product">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name_product" Type="nvarchar" MaxLength="150" />
+    <Property Name="price_or" Type="money" />
+    <Property Name="product_description" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="Registration">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="login_user" Type="nvarchar" MaxLength="150" />
+    <Property Name="password_user" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Registration_for_Clients">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="login_user" Type="nvarchar" MaxLength="150" />
+    <Property Name="password_user" Type="nvarchar" MaxLength="30" />
+    <Property Name="client_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="suppliers">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="company_suppliers" Type="nvarchar" MaxLength="150" />
+    <Property Name="id_contract" Type="int" Nullable="false" />
+    <Property Name="oborudivanie_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK__contract__id_pro__5441852A">
+    <End Role="product" Type="Self.product" Multiplicity="1" />
+    <End Role="contract" Type="Self.contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="contract">
+        <PropertyRef Name="id_product" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__employee__job_ti__5CD6CB2B">
+    <End Role="job_doljnost" Type="Self.job_doljnost" Multiplicity="1" />
+    <End Role="employee" Type="Self.employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="job_doljnost">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="employee">
+        <PropertyRef Name="job_title" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orders__id_clien__5FB337D6">
+    <End Role="clients" Type="Self.clients" Multiplicity="1" />
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clients">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="id_clients" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orders__id_contr__628FA481">
+    <End Role="contract" Type="Self.contract" Multiplicity="1" />
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="contract">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="id_contract" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orders__id_emplo__60A75C0F">
+    <End Role="employee" Type="Self.employee" Multiplicity="1" />
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="id_employee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orders__id_produ__619B8048">
+    <End Role="product" Type="Self.product" Multiplicity="1" />
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="id_product" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Registrat__clien__0D7A0286">
+    <End Role="clients" Type="Self.clients" Multiplicity="1" />
+    <End Role="Registration_for_Clients" Type="Self.Registration_for_Clients" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clients">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Registration_for_Clients">
+        <PropertyRef Name="client_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__suppliers__id_co__6C190EBB">
+    <End Role="contract" Type="Self.contract" Multiplicity="1" />
+    <End Role="suppliers" Type="Self.suppliers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="contract">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="suppliers">
+        <PropertyRef Name="id_contract" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__suppliers__oboru__6D0D32F4">
+    <End Role="oborudivanie" Type="Self.oborudivanie" Multiplicity="1" />
+    <End Role="suppliers" Type="Self.suppliers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="oborudivanie">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="suppliers">
+        <PropertyRef Name="oborudivanie_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище PhotoStudioModelContainer">
+    <EntitySet Name="clients" EntityType="Self.clients" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="contract" EntityType="Self.contract" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="job_doljnost" EntityType="Self.job_doljnost" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="oborudivanie" EntityType="Self.oborudivanie" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Registration" EntityType="Self.Registration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Registration_for_Clients" EntityType="Self.Registration_for_Clients" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="suppliers" EntityType="Self.suppliers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__contract__id_pro__5441852A" Association="Self.FK__contract__id_pro__5441852A">
+      <End Role="product" EntitySet="product" />
+      <End Role="contract" EntitySet="contract" />
+    </AssociationSet>
+    <AssociationSet Name="FK__employee__job_ti__5CD6CB2B" Association="Self.FK__employee__job_ti__5CD6CB2B">
+      <End Role="job_doljnost" EntitySet="job_doljnost" />
+      <End Role="employee" EntitySet="employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orders__id_clien__5FB337D6" Association="Self.FK__orders__id_clien__5FB337D6">
+      <End Role="clients" EntitySet="clients" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orders__id_contr__628FA481" Association="Self.FK__orders__id_contr__628FA481">
+      <End Role="contract" EntitySet="contract" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orders__id_emplo__60A75C0F" Association="Self.FK__orders__id_emplo__60A75C0F">
+      <End Role="employee" EntitySet="employee" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orders__id_produ__619B8048" Association="Self.FK__orders__id_produ__619B8048">
+      <End Role="product" EntitySet="product" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Registrat__clien__0D7A0286" Association="Self.FK__Registrat__clien__0D7A0286">
+      <End Role="clients" EntitySet="clients" />
+      <End Role="Registration_for_Clients" EntitySet="Registration_for_Clients" />
+    </AssociationSet>
+    <AssociationSet Name="FK__suppliers__id_co__6C190EBB" Association="Self.FK__suppliers__id_co__6C190EBB">
+      <End Role="contract" EntitySet="contract" />
+      <End Role="suppliers" EntitySet="suppliers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__suppliers__oboru__6D0D32F4" Association="Self.FK__suppliers__oboru__6D0D32F4">
+      <End Role="oborudivanie" EntitySet="oborudivanie" />
+      <End Role="suppliers" EntitySet="suppliers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

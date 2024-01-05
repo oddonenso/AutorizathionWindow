@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PhotoStudioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="clients">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="surname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="otchestvo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RoleId" Type="Int32" />
+    <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="orders" Relationship="Self.FK__orders__id_clien__5FB337D6" FromRole="clients" ToRole="orders" />
+    <NavigationProperty Name="Registration_for_Clients" Relationship="Self.FK__Registrat__clien__0D7A0286" FromRole="clients" ToRole="Registration_for_Clients" />
+  </EntityType>
+  <EntityType Name="contract">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name_contract" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="id_product" Type="Int32" Nullable="false" />
+    <Property Name="contract_description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="data_product" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="product" Relationship="Self.FK__contract__id_pro__5441852A" FromRole="contract" ToRole="product" />
+    <NavigationProperty Name="orders" Relationship="Self.FK__orders__id_contr__628FA481" FromRole="contract" ToRole="orders" />
+    <NavigationProperty Name="suppliers" Relationship="Self.FK__suppliers__id_co__6C190EBB" FromRole="contract" ToRole="suppliers" />
+  </EntityType>
+  <EntityType Name="employee">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="surname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="otchestvo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="age" Type="Int32" />
+    <Property Name="phone_number" Type="String" MaxLength="22" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="job_title" Type="Int32" Nullable="false" />
+    <Property Name="salary" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="work_experience" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="job_doljnost" Relationship="Self.FK__employee__job_ti__5CD6CB2B" FromRole="employee" ToRole="job_doljnost" />
+    <NavigationProperty Name="orders" Relationship="Self.FK__orders__id_emplo__60A75C0F" FromRole="employee" ToRole="orders" />
+  </EntityType>
+  <EntityType Name="job_doljnost">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="employee" Relationship="Self.FK__employee__job_ti__5CD6CB2B" FromRole="job_doljnost" ToRole="employee" />
+  </EntityType>
+  <EntityType Name="oborudivanie">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name_products" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="suppliers" Relationship="Self.FK__suppliers__oboru__6D0D32F4" FromRole="oborudivanie" ToRole="suppliers" />
+  </EntityType>
+  <EntityType Name="orders">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_clients" Type="Int32" Nullable="false" />
+    <Property Name="id_employee" Type="Int32" Nullable="false" />
+    <Property Name="id_product" Type="Int32" Nullable="false" />
+    <Property Name="id_contract" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="clients" Relationship="Self.FK__orders__id_clien__5FB337D6" FromRole="orders" ToRole="clients" />
+    <NavigationProperty Name="contract" Relationship="Self.FK__orders__id_contr__628FA481" FromRole="orders" ToRole="contract" />
+    <NavigationProperty Name="employee" Relationship="Self.FK__orders__id_emplo__60A75C0F" FromRole="orders" ToRole="employee" />
+    <NavigationProperty Name="product" Relationship="Self.FK__orders__id_produ__619B8048" FromRole="orders" ToRole="product" />
+  </EntityType>
+  <EntityType Name="product">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name_product" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="price_or" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="product_description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="contract" Relationship="Self.FK__contract__id_pro__5441852A" FromRole="product" ToRole="contract" />
+    <NavigationProperty Name="orders" Relationship="Self.FK__orders__id_produ__619B8048" FromRole="product" ToRole="orders" />
+  </EntityType>
+  <EntityType Name="Registration">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="login_user" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="password_user" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Registration_for_Clients">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="login_user" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="password_user" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="client_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="clients" Relationship="Self.FK__Registrat__clien__0D7A0286" FromRole="Registration_for_Clients" ToRole="clients" />
+  </EntityType>
+  <EntityType Name="suppliers">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="company_suppliers" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="id_contract" Type="Int32" Nullable="false" />
+    <Property Name="oborudivanie_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="contract" Relationship="Self.FK__suppliers__id_co__6C190EBB" FromRole="suppliers" ToRole="contract" />
+    <NavigationProperty Name="oborudivanie" Relationship="Self.FK__suppliers__oboru__6D0D32F4" FromRole="suppliers" ToRole="oborudivanie" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK__orders__id_clien__5FB337D6">
+    <End Role="clients" Type="Self.clients" Multiplicity="1" />
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clients">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="id_clients" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Registrat__clien__0D7A0286">
+    <End Role="clients" Type="Self.clients" Multiplicity="1" />
+    <End Role="Registration_for_Clients" Type="Self.Registration_for_Clients" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clients">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Registration_for_Clients">
+        <PropertyRef Name="client_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__contract__id_pro__5441852A">
+    <End Role="product" Type="Self.product" Multiplicity="1" />
+    <End Role="contract" Type="Self.contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="contract">
+        <PropertyRef Name="id_product" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orders__id_contr__628FA481">
+    <End Role="contract" Type="Self.contract" Multiplicity="1" />
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="contract">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="id_contract" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__suppliers__id_co__6C190EBB">
+    <End Role="contract" Type="Self.contract" Multiplicity="1" />
+    <End Role="suppliers" Type="Self.suppliers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="contract">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="suppliers">
+        <PropertyRef Name="id_contract" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__employee__job_ti__5CD6CB2B">
+    <End Role="job_doljnost" Type="Self.job_doljnost" Multiplicity="1" />
+    <End Role="employee" Type="Self.employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="job_doljnost">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="employee">
+        <PropertyRef Name="job_title" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orders__id_emplo__60A75C0F">
+    <End Role="employee" Type="Self.employee" Multiplicity="1" />
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="id_employee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__suppliers__oboru__6D0D32F4">
+    <End Role="oborudivanie" Type="Self.oborudivanie" Multiplicity="1" />
+    <End Role="suppliers" Type="Self.suppliers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="oborudivanie">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="suppliers">
+        <PropertyRef Name="oborudivanie_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orders__id_produ__619B8048">
+    <End Role="product" Type="Self.product" Multiplicity="1" />
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="id_product" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PhotoStudioEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="clients" EntityType="Self.clients" />
+    <EntitySet Name="contract" EntityType="Self.contract" />
+    <EntitySet Name="employee" EntityType="Self.employee" />
+    <EntitySet Name="job_doljnost" EntityType="Self.job_doljnost" />
+    <EntitySet Name="oborudivanie" EntityType="Self.oborudivanie" />
+    <EntitySet Name="orders" EntityType="Self.orders" />
+    <EntitySet Name="product" EntityType="Self.product" />
+    <EntitySet Name="Registration" EntityType="Self.Registration" />
+    <EntitySet Name="Registration_for_Clients" EntityType="Self.Registration_for_Clients" />
+    <EntitySet Name="suppliers" EntityType="Self.suppliers" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <AssociationSet Name="FK__orders__id_clien__5FB337D6" Association="Self.FK__orders__id_clien__5FB337D6">
+      <End Role="clients" EntitySet="clients" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Registrat__clien__0D7A0286" Association="Self.FK__Registrat__clien__0D7A0286">
+      <End Role="clients" EntitySet="clients" />
+      <End Role="Registration_for_Clients" EntitySet="Registration_for_Clients" />
+    </AssociationSet>
+    <AssociationSet Name="FK__contract__id_pro__5441852A" Association="Self.FK__contract__id_pro__5441852A">
+      <End Role="product" EntitySet="product" />
+      <End Role="contract" EntitySet="contract" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orders__id_contr__628FA481" Association="Self.FK__orders__id_contr__628FA481">
+      <End Role="contract" EntitySet="contract" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__suppliers__id_co__6C190EBB" Association="Self.FK__suppliers__id_co__6C190EBB">
+      <End Role="contract" EntitySet="contract" />
+      <End Role="suppliers" EntitySet="suppliers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__employee__job_ti__5CD6CB2B" Association="Self.FK__employee__job_ti__5CD6CB2B">
+      <End Role="job_doljnost" EntitySet="job_doljnost" />
+      <End Role="employee" EntitySet="employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orders__id_emplo__60A75C0F" Association="Self.FK__orders__id_emplo__60A75C0F">
+      <End Role="employee" EntitySet="employee" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__suppliers__oboru__6D0D32F4" Association="Self.FK__suppliers__oboru__6D0D32F4">
+      <End Role="oborudivanie" EntitySet="oborudivanie" />
+      <End Role="suppliers" EntitySet="suppliers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orders__id_produ__619B8048" Association="Self.FK__orders__id_produ__619B8048">
+      <End Role="product" EntitySet="product" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
